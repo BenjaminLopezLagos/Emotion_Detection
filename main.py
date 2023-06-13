@@ -1,6 +1,6 @@
 # This is a sample Python script.
 import nltk
-from EmotionLex import EmotionLex, Phrase
+from EmotionLex import *
 
 
 # Press Shift+F10 to execute it or replace it with your code.
@@ -11,13 +11,14 @@ def main():
     nltk.download('punkt')
     nltk.download('corpus')
     nltk.download('wordnet')
+    nltk.download('vader_lexicon')
 
-    emotion_lex = EmotionLex()
-    phrase = Phrase("I love rabbits very much 1.")
-    emotion_lex.find_emotions(phrase)
+    algorithm = NRCLex()
+    emotion_lex = EmotionLex(algorithm)
+    phrase = Phrase("He is ugly.")
+    emotions = emotion_lex.detect_emotion(phrase)
 
-    print(phrase.tokens)
-    print(phrase.emotions)
+    print(emotions)
 
 
 # Press the green button in the gutter to run the script.
