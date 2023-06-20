@@ -28,7 +28,7 @@ class NRCLex(DetectionStrategy):
         #    self.lexicon = json.load(json_file)
 
     def execute(self, phrase):
-        #df = pd.read_csv("nrclex.txt", sep="	", header=None, names=["word", "emotion", "is_present"])
+        # df = pd.read_csv("nrclex.txt", sep="	", header=None, names=["word", "emotion", "is_present"])
         unique_elements = self.lexicon["word"].unique()
         print(self.lexicon.shape)
         tokens = phrase.clean_phrase()
