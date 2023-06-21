@@ -20,7 +20,7 @@ def main():
     algorithm = NRCLex()
     emotion_lex = EmotionLex(algorithm)
 
-    phrase = Phrase("He is ugly.")
+    phrase = Phrase("He abandoned.")
     input_stream = InputStream(phrase.text)
     lexer = GrammarLexer.GrammarLexer(input_stream)
     stream = CommonTokenStream(lexer)
