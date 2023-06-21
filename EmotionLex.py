@@ -75,4 +75,5 @@ class Phrase:
         filtered_sentence = [w.lower() for w in word_tokens if w not in stop_words and w.isalnum()]
         filtered_sentence = [WordNetLemmatizer().lemmatize(w) for w in filtered_sentence]
 
+        #el pepe
         return filtered_sentence
