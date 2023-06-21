@@ -25,12 +25,13 @@ def main():
     lexer = GrammarLexer.GrammarLexer(input_stream)
     stream = CommonTokenStream(lexer)
     parser = GrammarParser.GrammarParser(stream)
-    tree = parser.sentence()
-    print(tree)
 
-    emotions = emotion_lex.detect_emotion(phrase)
-
-    print(emotions)
+    result = parser.sentence()
+    if result.exception is None:
+        emotions = emotion_lex.detect_emotion(phrase)
+        print(emotions)
+    else:
+        print("Entrada inválida.")
 
 
 # Press the green button in the gutter to run the script.
