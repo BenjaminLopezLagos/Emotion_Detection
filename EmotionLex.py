@@ -1,5 +1,6 @@
 import json
 import nltk
+import re
 from abc import ABC
 import pandas as pd
 from nltk.corpus import stopwords
@@ -56,14 +57,23 @@ class Phrase:
     def __init__(self, text):
         self.text = text
 
-    def clean_phrase(self):
-        text_tokens = []
-        stop_words = set(stopwords.words('english'))
-        lemmatizer = WordNetLemmatizer()
-        word_tokens = word_tokenize(self.text)
-        filtered_sentence = [w.lower() for w in word_tokens if w not in stop_words and w.isalnum()]
-        filtered_sentence = [lemmatizer.lemmatize(w) for w in filtered_sentence]
-        for w in filtered_sentence:
-            text_tokens.append(w)
+    def decontracted(self):
+        phrase = re.sub(r"n\'t", " "+"not", self.text)
+        phrase = re.sub(r"\'re", " "+"are", phrase)
+        phrase = re.sub(r"\'s", " "+"is", phrase)
+        phrase = re.sub(r"\'d", " "+"would", phrase)
+        phrase = re.sub(r"\'ll", " "+"will", phrase)
+        phrase = re.sub(r"\'ve", " "+"have", phrase)
+        phrase = re.sub(r"\'m", " "+"am", phrase)
+        return phrase
 
-        return text_tokens
+    def clean_phrase(self):
+        modified_phrase = self.decontracted()
+        stop_words = set(stopwords.words('english'))
+        stop_words.remove('not')
+        word_tokens = word_tokenize(modified_phrase)
+        filtered_sentence = [w.lower() for w in word_tokens if w not in stop_words and w.isalnum()]
+        filtered_sentence = [WordNetLemmatizer().lemmatize(w) for w in filtered_sentence]
+
+        #el pepe
+        return filtered_sentence
