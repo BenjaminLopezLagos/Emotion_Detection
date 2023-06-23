@@ -80,7 +80,7 @@ class Phrase:
         word_tokens = word_tokenize(modified_phrase)
         filtered_sentence = [w.lower() for w in word_tokens if w not in stop_words and w.isalnum()]
         filtered_sentence = [WordNetLemmatizer().lemmatize(w) for w in filtered_sentence]
-        filtered_sentence = join_negative_words(filtered_sentence)
+        filtered_sentence = join_keywords(filtered_sentence)
         for i in range(len(filtered_sentence)):
             if filtered_sentence[i] == "hated":
                 # special case where the word "hated" is not correctly lemmatized
@@ -91,11 +91,12 @@ class Phrase:
         return filtered_sentence
 
 
-def join_negative_words(token_list: list):
+# Joins tokens like "not" or "very" with the following word.
+def join_keywords(token_list: list):
     index_limit = range(len(token_list) - 1)
     try:
         for i in index_limit:
-            if token_list[i] == 'not' or token_list[i] == 'very':
+            if token_list[i].startswith('not') or token_list[i].startswith('very'):
                 token_list[i: i + 2] = [functools.reduce(lambda x, y: x + " " + y, token_list[i: i + 2])]
     except IndexError:
         # Might add a fix later but it works for now.
