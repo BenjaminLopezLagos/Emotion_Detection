@@ -25,13 +25,16 @@ def main():
     algorithm = NRCLex()
     emotion_lex = EmotionLex(algorithm)
 
-    phrase = Phrase("He abandoned.")
-    input_stream = InputStream(phrase.text)
+    phrase = Phrase("Pablo is smart and she is stupid. The dog is rapping.")
+    input_tags = []
+    for x in phrase.raw_tokens:
+        input_tags.append(x[1])
+    input_stream = InputStream(' '.join(input_tags))
     lexer = GrammarLexer.GrammarLexer(input_stream)
     stream = CommonTokenStream(lexer)
     parser = GrammarParser.GrammarParser(stream)
 
-    result = parser.sentence()
+    result = parser.start()
     if result.exception is None:
         emotions = emotion_lex.detect_emotion(phrase)
         print(emotions)
