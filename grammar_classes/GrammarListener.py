@@ -8,84 +8,57 @@ else:
 # This class defines a complete listener for a parse tree produced by GrammarParser.
 class GrammarListener(ParseTreeListener):
 
-    # Enter a parse tree produced by GrammarParser#sentence.
-    def enterSentence(self, ctx:GrammarParser.SentenceContext):
+    # Enter a parse tree produced by GrammarParser#start.
+    def enterStart(self, ctx:GrammarParser.StartContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#sentence.
-    def exitSentence(self, ctx:GrammarParser.SentenceContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#subject.
-    def enterSubject(self, ctx:GrammarParser.SubjectContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#subject.
-    def exitSubject(self, ctx:GrammarParser.SubjectContext):
+    # Exit a parse tree produced by GrammarParser#start.
+    def exitStart(self, ctx:GrammarParser.StartContext):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#object.
-    def enterObject(self, ctx:GrammarParser.ObjectContext):
+    # Enter a parse tree produced by GrammarParser#s.
+    def enterS(self, ctx:GrammarParser.SContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#object.
-    def exitObject(self, ctx:GrammarParser.ObjectContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#verb.
-    def enterVerb(self, ctx:GrammarParser.VerbContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#verb.
-    def exitVerb(self, ctx:GrammarParser.VerbContext):
+    # Exit a parse tree produced by GrammarParser#s.
+    def exitS(self, ctx:GrammarParser.SContext):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#article.
-    def enterArticle(self, ctx:GrammarParser.ArticleContext):
+    # Enter a parse tree produced by GrammarParser#np.
+    def enterNp(self, ctx:GrammarParser.NpContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#article.
-    def exitArticle(self, ctx:GrammarParser.ArticleContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#conjuntion.
-    def enterConjuntion(self, ctx:GrammarParser.ConjuntionContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#conjuntion.
-    def exitConjuntion(self, ctx:GrammarParser.ConjuntionContext):
+    # Exit a parse tree produced by GrammarParser#np.
+    def exitNp(self, ctx:GrammarParser.NpContext):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#point.
-    def enterPoint(self, ctx:GrammarParser.PointContext):
+    # Enter a parse tree produced by GrammarParser#nominal.
+    def enterNominal(self, ctx:GrammarParser.NominalContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#point.
-    def exitPoint(self, ctx:GrammarParser.PointContext):
-        pass
-
-
-    # Enter a parse tree produced by GrammarParser#adjective.
-    def enterAdjective(self, ctx:GrammarParser.AdjectiveContext):
-        pass
-
-    # Exit a parse tree produced by GrammarParser#adjective.
-    def exitAdjective(self, ctx:GrammarParser.AdjectiveContext):
+    # Exit a parse tree produced by GrammarParser#nominal.
+    def exitNominal(self, ctx:GrammarParser.NominalContext):
         pass
 
 
-    # Enter a parse tree produced by GrammarParser#negation.
-    def enterNegation(self, ctx:GrammarParser.NegationContext):
+    # Enter a parse tree produced by GrammarParser#vp.
+    def enterVp(self, ctx:GrammarParser.VpContext):
         pass
 
-    # Exit a parse tree produced by GrammarParser#negation.
-    def exitNegation(self, ctx:GrammarParser.NegationContext):
+    # Exit a parse tree produced by GrammarParser#vp.
+    def exitVp(self, ctx:GrammarParser.VpContext):
+        pass
+
+
+    # Enter a parse tree produced by GrammarParser#pp.
+    def enterPp(self, ctx:GrammarParser.PpContext):
+        pass
+
+    # Exit a parse tree produced by GrammarParser#pp.
+    def exitPp(self, ctx:GrammarParser.PpContext):
         pass
 
 
