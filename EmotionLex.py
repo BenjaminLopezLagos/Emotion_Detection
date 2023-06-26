@@ -1,4 +1,4 @@
-import json
+from json import load
 import nltk
 import functools
 import re
@@ -9,6 +9,13 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import wordnet
+
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('corpus')
+nltk.download('wordnet')
+nltk.download('vader_lexicon')
+nltk.download('averaged_perceptron_tagger')
 
 
 class EmotionLex:
@@ -27,6 +34,8 @@ class DetectionStrategy(ABC):
 class NRCLex(DetectionStrategy):
     def __init__(self, lex_file='nrc_en.json'):
         self.lexicon = pd.read_csv("nrclex.txt", sep="	", header=None, names=["word", "emotion", "is_present"])
+        with open(lex_file, 'r') as json_file:
+            self.lexicon_dict = load(json_file)
 
     def execute(self, phrase):
         print(self.lexicon.shape)
@@ -42,14 +51,30 @@ class NRCLex(DetectionStrategy):
             if w.find("not") != -1:
                 w = change_negative_word_to_antonym(w)
             if w.find("very") != -1:
-                multiplier = 1.5
+                multiplier = 2
                 w = remove_very_from_token(w)
+            """
             if self.lexicon["word"].str.contains(w).any():
                 word_lex_df = self.lexicon.query("word == @w & is_present > 0")
                 for index, row in word_lex_df.iterrows():
                     emotions[row["emotion"]] += 1 * multiplier
+            """
+            if self.lexicon_dict.get(w):
+                w_emotions = self.lexicon_dict[w]
+                for i in w_emotions:
+                    emotions[i] += 1 * multiplier
+        try:
+            return normalize_emotion_dict(emotions)
+        except ZeroDivisionError:
+            # returns the same emotion dict in the case that it only contains 0's.
+            return emotions
 
-        return emotions
+
+def normalize_emotion_dict(emotions: dict):
+    sum_scores = sum(emotions.values())
+    for key in emotions.keys():
+        emotions[key] = float(emotions[key]) / float(sum_scores)
+    return emotions
 
 
 class VADER(DetectionStrategy):
@@ -58,9 +83,18 @@ class VADER(DetectionStrategy):
         return analyzer.polarity_scores(phrase.text)
 
 
+"""
+Utilizar en main como:
+    phrase = Phrase("I am not dumb and she is stupid. The dog is rapping.")
+    input_tags = []
+    for x in phrase.raw_tokens:
+        input_tags.append(x[1])
+    input_stream = InputStream(' '.join(input_tags))
+"""
 class Phrase:
     def __init__(self, text):
         self.text = text
+        self.raw_tokens = nltk.pos_tag(word_tokenize(self.text))
 
     def decontracted(self):
         phrase = re.sub(r"n\'t", " " + "not", self.text)
@@ -77,6 +111,7 @@ class Phrase:
         stop_words = set(stopwords.words('english'))
         stop_words.remove('not')
         stop_words.remove('very')
+        stop_words.remove('nor')
         word_tokens = word_tokenize(modified_phrase)
         filtered_sentence = [w.lower() for w in word_tokens if w not in stop_words and w.isalnum()]
         filtered_sentence = [WordNetLemmatizer().lemmatize(w) for w in filtered_sentence]

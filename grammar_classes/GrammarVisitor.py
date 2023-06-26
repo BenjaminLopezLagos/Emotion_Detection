@@ -9,48 +9,33 @@ else:
 
 class GrammarVisitor(ParseTreeVisitor):
 
-    # Visit a parse tree produced by GrammarParser#sentence.
-    def visitSentence(self, ctx:GrammarParser.SentenceContext):
+    # Visit a parse tree produced by GrammarParser#start.
+    def visitStart(self, ctx:GrammarParser.StartContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GrammarParser#subject.
-    def visitSubject(self, ctx:GrammarParser.SubjectContext):
+    # Visit a parse tree produced by GrammarParser#s.
+    def visitS(self, ctx:GrammarParser.SContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GrammarParser#object.
-    def visitObject(self, ctx:GrammarParser.ObjectContext):
+    # Visit a parse tree produced by GrammarParser#np.
+    def visitNp(self, ctx:GrammarParser.NpContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GrammarParser#verb.
-    def visitVerb(self, ctx:GrammarParser.VerbContext):
+    # Visit a parse tree produced by GrammarParser#nominal.
+    def visitNominal(self, ctx:GrammarParser.NominalContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GrammarParser#article.
-    def visitArticle(self, ctx:GrammarParser.ArticleContext):
+    # Visit a parse tree produced by GrammarParser#vp.
+    def visitVp(self, ctx:GrammarParser.VpContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by GrammarParser#conjuntion.
-    def visitConjuntion(self, ctx:GrammarParser.ConjuntionContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by GrammarParser#point.
-    def visitPoint(self, ctx:GrammarParser.PointContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by GrammarParser#adjective.
-    def visitAdjective(self, ctx:GrammarParser.AdjectiveContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by GrammarParser#negation.
-    def visitNegation(self, ctx:GrammarParser.NegationContext):
+    # Visit a parse tree produced by GrammarParser#pp.
+    def visitPp(self, ctx:GrammarParser.PpContext):
         return self.visitChildren(ctx)
 
 
