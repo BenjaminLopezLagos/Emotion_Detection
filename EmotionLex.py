@@ -9,6 +9,8 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import wordnet
+from transformers import pipeline
+import torch
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -83,6 +85,12 @@ class VADER(DetectionStrategy):
         return analyzer.polarity_scores(phrase.text)
 
 
+class Transformers(DetectionStrategy):
+    def execute(self, phrase):
+        ekman = pipeline('sentiment-analysis', model='arpanghoshal/EkmanClassifier')
+        return ekman(phrase.text)[0]['label']
+
+
 """
 Utilizar en main como:
     phrase = Phrase("I am not dumb and she is stupid. The dog is rapping.")
@@ -91,6 +99,8 @@ Utilizar en main como:
         input_tags.append(x[1])
     input_stream = InputStream(' '.join(input_tags))
 """
+
+
 class Phrase:
     def __init__(self, text):
         self.text = text
