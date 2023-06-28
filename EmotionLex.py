@@ -31,7 +31,10 @@ class EmotionLex:
 class DetectionStrategy(ABC):
     def execute(self, phrase):
         pass
-
+class Transformers(DetectionStrategy):
+    def execute(self, phrase):
+        ekman = pipeline('sentimental-analysis',model='arpanghoshal/EkmanClassifier')
+        return ekman(phrase.text)[0]['label']
 
 class NRCLex(DetectionStrategy):
     def __init__(self, lex_file='nrc_en.json'):
