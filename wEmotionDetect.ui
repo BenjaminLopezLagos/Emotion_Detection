@@ -34,18 +34,18 @@
    <widget class="QTextEdit" name="textSentence">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>60</x>
       <y>110</y>
-      <width>301</width>
-      <height>87</height>
+      <width>341</width>
+      <height>101</height>
      </rect>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>270</y>
+      <x>60</x>
+      <y>280</y>
       <width>241</width>
       <height>31</height>
      </rect>
@@ -57,46 +57,14 @@
    <widget class="QPushButton" name="bDetectEmotion">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>220</y>
+      <x>60</x>
+      <y>230</y>
       <width>121</width>
       <height>28</height>
      </rect>
     </property>
     <property name="text">
      <string>Detect Emotion</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkVader">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>320</y>
-      <width>81</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 75 9pt &quot;MS Shell Dlg 2&quot;;</string>
-    </property>
-    <property name="text">
-     <string>VADER</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkNRC">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>360</y>
-      <width>81</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 75 9pt &quot;MS Shell Dlg 2&quot;;</string>
-    </property>
-    <property name="text">
-     <string>NRCLex</string>
     </property>
    </widget>
    <widget class="QListView" name="listEmotion">
@@ -123,6 +91,32 @@
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#fefefe;&quot;&gt;Emotion Detection&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rVader">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>340</y>
+      <width>95</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>VADER</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rNRCL">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>370</y>
+      <width>95</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>NRCLex</string>
     </property>
    </widget>
   </widget>
