@@ -11,6 +11,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import wordnet
 from transformers import pipeline
 import torch
+import fuzzy_functions as fuzzy
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -31,10 +32,7 @@ class EmotionLex:
 class DetectionStrategy(ABC):
     def execute(self, phrase):
         pass
-class Transformers(DetectionStrategy):
-    def execute(self, phrase):
-        ekman = pipeline('sentimental-analysis',model='arpanghoshal/EkmanClassifier')
-        return ekman(phrase.text)[0]['label']
+
 
 class NRCLex(DetectionStrategy):
     def __init__(self, lex_file='nrc_en.json'):
@@ -49,6 +47,8 @@ class NRCLex(DetectionStrategy):
         emotions = {'fear': 0.0, 'anger': 0.0, 'anticipation': 0.0, 'trust': 0.0,
                     'surprise': 0.0, 'positive': 0.0, 'negative': 0.0, 'sadness': 0.0,
                     'disgust': 0.0, 'joy': 0.0}
+        # emo tokens means words that have emotions in the lexicon
+        n_emo_tokens = 0
         for w in tokens:
             # in progress, it's supposed to boost words that have "very" as prefix
             multiplier = 1
@@ -65,20 +65,31 @@ class NRCLex(DetectionStrategy):
                     emotions[row["emotion"]] += 1 * multiplier
             """
             if self.lexicon_dict.get(w):
+                n_emo_tokens += 1
                 w_emotions = self.lexicon_dict[w]
                 for i in w_emotions:
                     emotions[i] += 1 * multiplier
         try:
-            return normalize_emotion_dict(emotions)
+            emotions = normalize_emotion_dict(emotions, n_emo_tokens)
+            return apply_fuzziness_to_emotions(emotions)
         except ZeroDivisionError:
             # returns the same emotion dict in the case that it only contains 0's.
             return emotions
 
 
-def normalize_emotion_dict(emotions: dict):
-    sum_scores = sum(emotions.values())
+def normalize_emotion_dict(emotions: dict, n: int):
     for key in emotions.keys():
-        emotions[key] = float(emotions[key]) / float(sum_scores)
+        emotions[key] = float(emotions[key]) / float(n)
+    return emotions
+
+
+def apply_fuzziness_to_emotions(emotions: dict):
+    for key in emotions.keys():
+        emotion_value = emotions[key]
+        emo_degrees = {'low': fuzzy.u_sigmoid(emotion_value, -10.0, 0.3),
+                       'medium': fuzzy.u_generalized_bell(emotion_value, 0.15, 5.0, 0.5),
+                       'high': fuzzy.u_sigmoid(emotion_value, 10.0, 0.7)}
+        emotions[key] = emo_degrees
     return emotions
 
 
@@ -91,7 +102,9 @@ class VADER(DetectionStrategy):
 class Transformers(DetectionStrategy):
     def execute(self, phrase):
         ekman = pipeline('sentiment-analysis', model='arpanghoshal/EkmanClassifier')
-        return ekman(phrase.text)[0]['label']
+        results = ekman(phrase.text)
+        # esto retorna un diccionario {'emocion': string, 'puntaje': float}
+        return ekman(phrase.text)[0]
 
 
 """
