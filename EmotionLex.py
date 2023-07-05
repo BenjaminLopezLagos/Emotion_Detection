@@ -74,7 +74,7 @@ class NRCLex(DetectionStrategy):
             return apply_fuzziness_to_emotions(emotions)
         except ZeroDivisionError:
             # returns the same emotion dict in the case that it only contains 0's.
-            return emotions
+            return apply_fuzziness_to_emotions(emotions)
 
 
 def normalize_emotion_dict(emotions: dict, n: int):
@@ -120,7 +120,8 @@ Utilizar en main como:
 class Phrase:
     def __init__(self, text):
         self.text = text
-        self.raw_tokens = nltk.pos_tag(word_tokenize(self.text))
+        self.raw_tokens = nltk.pos_tag(word_tokenize(self.decontracted()))
+        print(self.raw_tokens)
 
     def decontracted(self):
         phrase = re.sub(r"n\'t", " " + "not", self.text)

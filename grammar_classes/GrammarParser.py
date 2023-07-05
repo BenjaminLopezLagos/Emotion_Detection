@@ -52,7 +52,7 @@ class GrammarParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "'DT'", "'IN'", 
+    literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "'DT'", "<INVALID>", 
                      "'CC'", "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                      "'.'" ]
 

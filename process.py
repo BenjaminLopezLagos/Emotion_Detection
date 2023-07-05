@@ -14,12 +14,6 @@ from grammar_classes import GrammarVisitor
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 def processNRCLexer(text):
-    nltk.download('stopwords')
-    nltk.download('punkt')
-    nltk.download('corpus')
-    nltk.download('wordnet')
-    nltk.download('vader_lexicon')
-
     algorithm = NRCLex()
     emotion_lex = EmotionLex(algorithm)
     #phrase = Phrase("Pablo is smart and she is stupid. The dog is rapping.")
@@ -36,16 +30,12 @@ def processNRCLexer(text):
     if result.exception is None:
         emotions = emotion_lex.detect_emotion(phrase)
         print(emotions)
+        return emotions
     else:
         print("Entrada inválida.")
+        return {}
 
 def processTransformer(text):
-    nltk.download('stopwords')
-    nltk.download('punkt')
-    nltk.download('corpus')
-    nltk.download('wordnet')
-    nltk.download('vader_lexicon')
-
     algorithm = Transformers()
     emotion_lex = EmotionLex(algorithm)
     #phrase = Phrase("Pablo is smart and she is stupid. The dog is rapping.")
@@ -62,5 +52,7 @@ def processTransformer(text):
     if result.exception is None:
         emotions = emotion_lex.detect_emotion(phrase)
         print(emotions)
+        return emotions
     else:
         print("Entrada inválida.")
+        return {}
