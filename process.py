@@ -2,7 +2,6 @@
 import sys
 
 import nltk
-from PyQt5 import QtWidgets
 
 from EmotionLex import *
 from antlr4 import *
